@@ -4,14 +4,14 @@ import java.io.File;
 import java.util.Scanner;
 
 public class Main {
-    static String oldExtension = "JPG";
-    static String newExtension = "dat";
-    static String oldString = "IMG_";
-    static String newString = "";
-    static String current = "Not available";
-    static String newFileName = "Temporary unavailable";
-    static String oldFileName = "Temporary unavailable";
-    static boolean replaceExtension = true;
+    static String oldExtension = "Not defined";
+    static String newExtension = "Not defined";
+    static String oldString = "Not defined";
+    static String newString = "Not defined";
+    static String currentDirectory = "Not defined";
+    static String newFileName = "Not defined";
+    static String oldFileName = "Not defined";
+    static boolean replaceExtension = false;
     static boolean replaceString = false;
 
     public static void main(String[] args) {
@@ -22,12 +22,12 @@ public class Main {
     }
 
     private static void replacing(){
-        File path = new File(current);
+        File path = new File(currentDirectory);
         File [] files = path.listFiles();
 
         for (int i = 0; i < files.length; i++){
             if (files[i].isFile()){ //this line weeds out other directories/folders
-                File tempFile = new File(current + files[i].toString());
+                File tempFile = new File(currentDirectory + files[i].toString());
                 oldFileName = tempFile.getName();
                 newFileName = oldFileName;
                 if(replaceString) {
@@ -38,11 +38,11 @@ public class Main {
                     System.out.println("Replacing extension: " + oldExtension + " with " + newExtension + " on file: " + oldFileName);
                     newFileName = newFileName.replaceAll(oldExtension, newExtension);
                 }
-                files[i].renameTo(new File(current + "\\" +  newFileName));
-               // System.out.println("Replaced " + oldFileName + " with " + newFileName);
+                files[i].renameTo(new File(currentDirectory + "\\" +  newFileName));
             }
         }
     }
+
     private static void setVariables(){
         Scanner scanner = new Scanner(System.in);
 
@@ -71,8 +71,8 @@ public class Main {
 
     private static void setDirectory(){
         try{
-            current = new java.io.File( "." ).getCanonicalPath();
-            System.out.println("Working in directory: " + current + "\n");
+            currentDirectory = new java.io.File( "." ).getCanonicalPath();
+            System.out.println("Working in directory: " + currentDirectory + "\n");
         }
         catch(Exception e){
             System.out.println(e.getMessage());
